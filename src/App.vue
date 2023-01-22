@@ -1,11 +1,13 @@
 <template>
   <div class="app">
-    App 组件
+    <router-view />
+    <TabBar />
   </div>
 </template>
 
 <script setup>
+import TabBar from '@/components/tab-bar/tab-bar.vue'
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="less">
 </style>
