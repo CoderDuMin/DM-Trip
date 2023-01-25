@@ -1,5 +1,6 @@
 <template>
   <div class="city">
+    <!-- 城市位置 -->
     <div class="top">
       <van-search
         v-model="searchValue"
@@ -14,6 +15,7 @@
         </template>
       </van-tabs>
     </div>
+    <!-- 其他信息 -->
     <div class="content">
       <template v-for="(value,key,index) in allCities" :key="key" >
         <CityGroup :group-data="value" v-show="key === tabAcitive" />
