@@ -59,7 +59,7 @@
 
     <!-- 搜索按钮 -->
     <div class="section search-btn">
-      <van-button color="#ff9854" style="font-size:15px;" round  block>开始搜索</van-button>
+      <div class="btn" @click="searchBtnClick">开始搜索</div>
     </div>
   </div>
 </template>
@@ -96,7 +96,7 @@ const getLoc = () => {
 // 日期信息
 const showCalendar = ref(false)
 const dateInfo = reactive({
-  startDate:new Date(),
+  startDate:new Date().getTime(),
   endDate:new Date().setDate(new Date().getDate() + 1),
   stayCount:1
 })
@@ -112,6 +112,18 @@ const onDateConfirm = (dates) => {
 // 热门建议
 const homeStore = useHomeStore()
 const { hotSuggests } = storeToRefs(homeStore)
+
+// 跳转搜索
+const searchBtnClick = () => {
+  router.push({
+    path:'/search',
+    query:{
+      startDate:dateInfo.startDate,
+      endDate:dateInfo.endDate,
+      city:cityStore.currentCity.cityName
+    }
+  })
+}
 
 
 </script>
@@ -206,8 +218,19 @@ const { hotSuggests } = storeToRefs(homeStore)
       line-height: 1;
     }
   }
-  .search-btn{
-    margin-top: 10px;
+  .search-btn {
+    .btn {
+      width: 342px;
+      height: 38px;
+      max-height: 50px;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 38px;
+      text-align: center;
+      border-radius: 20px;
+      color: #fff;
+      background-image: var(--theme-linear-gradient);
+    }
   }
 
 }
