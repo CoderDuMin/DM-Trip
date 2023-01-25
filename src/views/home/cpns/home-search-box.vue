@@ -119,8 +119,6 @@ const searchBtnClick = () => {
   router.push({
     path:'/search',
     query:{
-      startDate:dateInfo.startDate,
-      endDate:dateInfo.endDate,
       city:cityStore.currentCity.cityName
     }
   })

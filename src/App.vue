@@ -1,6 +1,10 @@
 <template>
   <div class="app">
-    <router-view />
+    <router-view v-slot="{ Component }">
+      <keep-alive>
+        <component :is="Component" />
+      </keep-alive>
+    </router-view>
     <TabBar v-show="!route.meta?.hideTabbar" />
   </div>
 </template>
