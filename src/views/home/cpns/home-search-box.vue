@@ -2,7 +2,10 @@
   <div class="home-search-box">
     <!-- 城市/位置 -->
     <div class="localtion">
-      <span class="position" @click="choosePosition">{{cityStore.currentCity.cityName}}</span>
+      <span class="position" @click="choosePosition">
+        <van-icon name="location-o" color="#ff9854" :size="18"/>
+        {{cityStore.currentCity.cityName}}
+      </span>
       <div class="current" @click="getLoc">
         <span>我的位置</span>
         <img src="@/assets/img/home/icon_location.png" alt="">
