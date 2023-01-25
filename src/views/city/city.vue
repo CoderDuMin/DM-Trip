@@ -15,28 +15,9 @@
       </van-tabs>
     </div>
     <div class="content">
-      <div class="hots">
-        <div class="title">热门</div>
-        <div class="hot-tags">
-          <van-tag v-for="hot in currentCityGroup?.hotCities" 
-                   :key="hot.cityId" 
-                   size="large"
-                   round
-                   color="#FFF2EE"
-                   text-color="#666"
-                   style="margin: 5px 0px 5px 10px;"
-                   type="warning">{{ hot.cityName }}</van-tag>
-        </div>
-      </div>
-      <div class="city-list">
-        <van-index-bar>
-          <template v-for="(item,index) in currentCityGroup?.cities">
-            <van-index-anchor :index="item.group"  />
-            <van-cell v-for="city in item.cities" :key="city.cityId" :title="city.cityName" />
-          </template>
-          
-        </van-index-bar>
-      </div>
+      <template v-for="(value,key,index) in allCities" :key="key" >
+        <CityGroup :group-data="value" v-show="key === tabAcitive" />
+      </template>
     </div>
   </div>
 </template>
@@ -45,8 +26,8 @@
 import { ref } from 'vue';
 import useCityStore from '@/stores/modules/city'
 import { storeToRefs } from 'pinia';
-import { computed } from '@vue/reactivity';
 import { useRouter } from 'vue-router';
+import CityGroup from './cpns/city-group.vue'
 
 
 const router = useRouter()
@@ -54,8 +35,7 @@ const cityStore = useCityStore()
 
 const { allCities } = storeToRefs(cityStore)
 const searchValue = ref('')
-const tabAcitive = ref()
-const currentCityGroup = computed(() => allCities.value[tabAcitive.value])
+const tabAcitive = ref('')
 
 
 const handleCancel = () => {
@@ -69,6 +49,9 @@ cityStore.fetchAllCitiesData()
 <style scoped lang="less">
 .city{
   height: 100vh;
+  .top{
+    position: relative;
+  }
   .content{
     height:calc(100% - 98px);
     overflow-y: auto;
