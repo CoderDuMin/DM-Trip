@@ -17,14 +17,14 @@
       <div class="start">
         <div class="date">
           <span class="tip">入住</span>
-          <span class="time">{{ getMonthDay(dateInfo.startDate) }}</span>
+          <span class="time">{{ startDateStr }}</span>
         </div>
-        <div class="stay">共{{ dateInfo.stayCount }}晚</div>
+        <div class="stay">共{{ stayCount }}晚</div>
       </div>
       <div class="end">
         <div class="date">
           <span class="tip">离店</span>
-          <span class="time">{{ getMonthDay(dateInfo.endDate) }}</span>
+          <span class="time">{{ endDateStr }}</span>
         </div>
       </div>
     </div>
@@ -71,6 +71,8 @@ import useCityStore from '@/stores/modules/city';
 import { getMonthDay,getDiffDay } from '@/utils/format-date'
 import useHomeStore from '@/stores/modules/home';
 import { storeToRefs } from 'pinia';
+import useMainStore from '@/stores/modules/main';
+import { computed } from '@vue/reactivity';
 
 // 位置/城市
 const router = useRouter()
@@ -95,16 +97,15 @@ const getLoc = () => {
 
 // 日期信息
 const showCalendar = ref(false)
-const dateInfo = reactive({
-  startDate:new Date().getTime(),
-  endDate:new Date().setDate(new Date().getDate() + 1),
-  stayCount:1
-})
+const mainStore = useMainStore()
+const { startDate,endDate } = storeToRefs(mainStore)
+const startDateStr = computed(() => getMonthDay(startDate.value))
+const endDateStr = computed(() => getMonthDay(endDate.value))
+const stayCount = computed(() => getDiffDay(startDate.value,endDate.value))
 const onDateConfirm = (dates) => {
   // 更改日期
-  dateInfo.startDate = dates[0]
-  dateInfo.endDate = dates[1]
-  dateInfo.stayCount = getDiffDay(dates[0],dates[1])
+  mainStore.startDate = dates[0]
+  mainStore.endDate = dates[1]
   // 关闭日期弹窗
   showCalendar.value = false
 }

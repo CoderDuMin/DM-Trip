@@ -5,7 +5,9 @@
       <img src="@/assets/img/home/banner.webp" alt="">
     </div>
     <HomeSearchBox />
-    <div class="search-bar" v-show="isShowSearchBar">我是搜索栏红红火火恍恍惚惚</div>
+    <div class="search-bar" v-show="isShowSearchBar">
+      <SearchBar />
+    </div>
     <HomeCategory />
     <HomeContent />
   </div>
@@ -17,6 +19,7 @@ import HomeNavBar from './cpns/home-nav-bar.vue';
 import HomeSearchBox from './cpns/home-search-box.vue';
 import HomeCategory from './cpns/home-category.vue'
 import HomeContent from './cpns/home-content.vue'
+import SearchBar from '@/components/search-bar/search-bar.vue'
 import useScroll from '@/hooks/useScroll';
 import { computed, watch } from 'vue';
 
@@ -36,7 +39,7 @@ watch(isReachBottom,(newValue) => {
   }
 })
 const isShowSearchBar = computed(() => {
-  return scrollTop.value > 100
+  return scrollTop.value > 390
 })
 
 </script>
@@ -49,6 +52,15 @@ const isShowSearchBar = computed(() => {
   img{
     width:100%;
   }
+}
+.search-bar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  z-index: 9;
+  padding: 16px 10px 10px;
 }
 
 </style>

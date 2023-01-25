@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 
-export const getMonthDay = (date) => {
-  return dayjs(date).format('MM月DD日')
+export const getMonthDay = (date,format='MM月DD日') => {
+  return dayjs(date).format(format)
 }
 
 export const getDiffDay = (startDate,endDate) => {
