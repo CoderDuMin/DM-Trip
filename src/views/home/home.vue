@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" ref="homeRef">
     <HomeNavBar />
     <div class="banner">
       <img src="@/assets/img/home/banner.webp" alt="">
@@ -21,7 +21,7 @@ import HomeCategory from './cpns/home-category.vue'
 import HomeContent from './cpns/home-content.vue'
 import SearchBar from '@/components/search-bar/search-bar.vue'
 import useScroll from '@/hooks/useScroll';
-import { computed, watch } from 'vue';
+import { computed, watch,ref, onActivated } from 'vue';
 
 // 网络请求
 const homeStore = useHomeStore()
@@ -30,7 +30,8 @@ homeStore.fetchCategoryData()
 homeStore.fetchHouseList()
 
 // 监听页面滚动
-const {scrollTop,isReachBottom} = useScroll()
+const homeRef = ref()
+const {scrollTop,isReachBottom} = useScroll(homeRef)
 watch(isReachBottom,(newValue) => {
   if(newValue){ 
     homeStore.fetchHouseList().then(()=>{
@@ -42,11 +43,20 @@ const isShowSearchBar = computed(() => {
   return scrollTop.value > 390
 })
 
+onActivated(() => {
+  console.log(homeRef.value)
+  homeRef.value?.scrollTo({
+    top:scrollTop.value,
+  })
+})
+
 </script>
 
 <style scoped lang="less">
 .home{
   padding-bottom: 50px;
+  height: 100vh;
+  overflow-y: auto;
 }
 .banner{
   img{

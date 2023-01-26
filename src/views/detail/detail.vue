@@ -1,6 +1,7 @@
 <template>
   <div ref="detailRef" class="detail top-page">
     <TabControl v-if="isShowTab" 
+                ref="tabControlRef"
                 class="tabs"
                 :titles="titles" @tab-item-click="tabClick"></TabControl>
     <van-nav-bar
@@ -48,12 +49,11 @@ const router = useRouter()
 const detailStore = useDetailStore()
 detailStore.fetchHouseDetailData(route.params.id)
 
-watch(route,() => {
-
-  detailStore.fetchHouseDetailData(route.params.id)
-},{
-  deep:true
-})
+// watch(route,() => {
+//   detailStore.fetchHouseDetailData(route.params.id)
+// },{
+//   deep:true
+// })
 
 const { detailInfos } = storeToRefs(detailStore)
 const mainPart = computed(() => detailInfos.value?.mainPart)
@@ -67,7 +67,7 @@ const onPageBack = () => {
 const detailRef = ref()
 const {scrollTop,isReachBottom} = useScroll(detailRef)
 const isShowTab = computed(()=>{
-  return scrollTop.value > 200
+  return scrollTop.value > 243
 })
 const elRefs = ref({})
 const getRef = (value) => {
@@ -86,11 +86,25 @@ const tabClick = (index) => {
   if(el.offsetTop !== 0){
     detailRef.value.scrollTo({
       top: el.offsetTop - 44,
-      behavior: 'smooth'
+      // behavior: 'smooth'
     })
   }
 
 }
+const tabControlRef = ref()
+watch(scrollTop,(newValue) => {
+  const elTops = Object.values(elRefs.value).map(el => el.offsetTop)
+  console.log(elTops)
+  let index = -1;
+  for(let i = 0; i<elTops.length;i++){
+    if(newValue < (elTops[i] - 44)){
+      index = i - 1
+      break
+    }
+  }
+  console.log(index)
+  tabControlRef.value?.setCurrentIndex(index)
+})
 </script>
 
 <style scoped lang="less">
