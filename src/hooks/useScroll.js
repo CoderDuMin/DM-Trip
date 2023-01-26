@@ -1,32 +1,46 @@
 import { ref,onMounted,onUnmounted,onActivated,onDeactivated } from 'vue'
 import { throttle } from 'underscore'
 
-export default function useScroll(){
+export default function useScroll(elRef){
+  let el = window
   const isReachBottom = ref(false)
   const clientHeight = ref(0)
   const scrollHeight = ref(0)
   const scrollTop = ref(0)
 
   const listenScroll = throttle(() => {
-    clientHeight.value = document.documentElement.clientHeight
-    scrollHeight.value = document.documentElement.scrollHeight
-    scrollTop.value = document.documentElement.scrollTop
+    if(el === window){
+      clientHeight.value = document.documentElement.clientHeight
+      scrollHeight.value = document.documentElement.scrollHeight
+      scrollTop.value = document.documentElement.scrollTop
+    }
+    else{
+      clientHeight.value = el.clientHeight
+      scrollHeight.value = el.scrollHeight
+      scrollTop.value = el.scrollTop
+    }
     if(clientHeight.value + scrollTop.value >= scrollHeight.value){
       isReachBottom.value = true
     }
   },100)
 
   onMounted(() => {
-    window.addEventListener('scroll',listenScroll)
+    console.log('监听滚动事件')
+    if(elRef) el = elRef.value
+    el.addEventListener('scroll',listenScroll)
   })
   onUnmounted(() => {
-    window.removeEventListener('scroll',listenScroll)
+    console.log('移除监听滚动事件')
+    el.removeEventListener('scroll',listenScroll)
   })
   onActivated(() => {
-    window.addEventListener('scroll',listenScroll)
+    console.log('监听滚动事件')
+    if(elRef) el = elRef.value
+    el.addEventListener('scroll',listenScroll)
   })
   onDeactivated(() => {
-    window.removeEventListener('scroll',listenScroll)
+    console.log('移除监听滚动事件')
+    el.removeEventListener('scroll',listenScroll)
   })
 
   return { isReachBottom,

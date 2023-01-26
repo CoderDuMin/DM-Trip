@@ -1,11 +1,11 @@
 <template>
   <div class="app">
-    <!-- <router-view v-slot="{ Component }">
+    <router-view v-slot="{ Component }">
       <keep-alive>
         <component :is="Component" />
       </keep-alive>
-    </router-view> -->
-    <RouterView></RouterView>
+    </router-view>
+    <!-- <RouterView></RouterView> -->
     <TabBar v-show="!route.meta?.hideTabbar" />
     <Loading />
   </div>
