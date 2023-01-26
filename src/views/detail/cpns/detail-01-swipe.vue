@@ -8,16 +8,20 @@
       </template>
       <template #indicator="{ active, total }">
         <div class="indicator">
-          <div 
-            v-for="(value,key,index) in swipeGroup " 
-            class="item" 
-            :class="{'active': housePics[active]?.enumPictureCategory == key}"
-            :key="key">
-            {{ getName(value[0].title) }}
-            <span class="count" v-if="housePics[active]?.enumPictureCategory == key">
-              {{ getCategoryIndex(housePics[active]) }}/{{ value.length }}
-            </span>
-          </div>
+          <template  v-for="(value,key,index) in swipeGroup "
+                     :key="key"
+                      >
+            <div 
+              class="item" 
+              :class="{'active': housePics[active]?.enumPictureCategory == key}"
+              >
+              {{ getName(value[0].title) }}
+              <span class="count" v-if="housePics[active]?.enumPictureCategory == key">
+                {{ getCategoryIndex(housePics[active]) }}/{{ value.length }}
+              </span>
+            </div>
+          </template>
+          
           
         </div>
       </template>
@@ -26,8 +30,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-
 // 定义props
 const props = defineProps({
   housePics:{
@@ -61,6 +63,7 @@ const getName = (name) => {
 const getCategoryIndex = (item) => {
   const valueArr = swipeGroup[item.enumPictureCategory]
   let index = valueArr.findIndex(ite => ite === item) + 1
+  console.log('index',index)
   return index 
 }
 
@@ -69,6 +72,7 @@ const getCategoryIndex = (item) => {
 
 <style scoped lang="less">
 .detail-swipe {
+  height: 251px;
   .swipe-list {
     .item {
       img {
