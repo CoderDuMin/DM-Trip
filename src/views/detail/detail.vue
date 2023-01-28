@@ -24,6 +24,7 @@
       <img src="@/assets/img/detail/icon_ensure.png" alt="">
       <div class="text">趣旅途, 永无止境!</div>
     </div>
+    <action-bar :current-house="currentHouse"/>
   </div>
 </template>
 
@@ -42,6 +43,7 @@ import DetailComment from './cpns/detail-05-comment.vue'
 import DetailNotice from './cpns/detail-06-notice.vue'
 import DetailMap from './cpns/detail-07-map.vue'
 import DetailIntro from './cpns/detail-08-intro.vue'
+import ActionBar from './cpns/detail-09-actionbar.vue'
 import useScroll from '@/hooks/useScroll';
 
 const route = useRoute()
@@ -57,6 +59,8 @@ detailStore.fetchHouseDetailData(route.params.id)
 
 const { detailInfos } = storeToRefs(detailStore)
 const mainPart = computed(() => detailInfos.value?.mainPart)
+
+const currentHouse = computed(() => detailInfos.value?.currentHouse)
 
 // f返回上级
 const onPageBack = () => {

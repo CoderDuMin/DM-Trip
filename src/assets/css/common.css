@@ -31,6 +31,12 @@ body {
   height: 12px;
   background: url(../img/detail/icon_check.png) 0 0 / 100% 100%;
 }
+.detail_icon_chat {
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  background: url(../img/detail/icon_chat.png) 0 0 / 100% 100%;
+}
 
 .amap-logo,.amap-copyright{
   display: none !important;
