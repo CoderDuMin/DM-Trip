@@ -3,7 +3,7 @@
     <van-swipe class="swipe-list" :autoplay="3000" indicator-color="white">
       <template v-for="(item,index) in housePics" :key="index">
         <van-swipe-item class="item">
-          <img :src="item.url" alt="">
+          <img :src="item.url" alt="" @click="previewImg(index)">
         </van-swipe-item>
       </template>
       <template #indicator="{ active, total }">
@@ -30,6 +30,8 @@
 </template>
 
 <script setup>
+import { showImagePreview } from 'vant';
+
 // 定义props
 const props = defineProps({
   housePics:{
@@ -65,6 +67,15 @@ const getCategoryIndex = (item) => {
   let index = valueArr.findIndex(ite => ite === item) + 1
   console.log('index',index)
   return index 
+}
+
+// 图片预览
+const previewImg = (index) => {
+  console.log('预览图片',index)
+  showImagePreview({
+    images: props.housePics.map(item => item.url),
+    startPosition: index,
+  });
 }
 
 
