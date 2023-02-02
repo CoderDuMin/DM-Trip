@@ -20,7 +20,7 @@ const router = createRouter({
     {
       path:'/order',
       name:'order',
-      component:() => import('@/views/order/order.vue')
+      component:() => import('@/views/order/index.vue')
     },
     {
       path:'/message',
